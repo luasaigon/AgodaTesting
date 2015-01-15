@@ -45,38 +45,45 @@ public class CommonAction {
         2: name
         3: xpath
          */
-        boolean isFail=false;
+        boolean isExist=true;
         switch (type){
             case 1:{
                 try {
                     driver.findElement(By.id(locator));
+                    //isExist=true;
                 } catch (NoSuchElementException e) {
-                    return isFail;
+                    isExist=false;
                 }
-                isFail=true;
+
                 break;
             }
             case 2:{
                 try {
                     driver.findElement(By.name(locator));
+                    //isExist= true;
                 } catch (NoSuchElementException e) {
-                    return isFail;
+                    isExist=false;
                 }
-                isFail= true;
+
                 break;
 
             }
             case 3:{
                 try {
                     driver.findElement(By.xpath(locator));
+                    //isExist= true;
                 } catch (NoSuchElementException e) {
-                    return isFail;
+                    isExist=false;
                 }
-                isFail= true;
+
                 break;
 
             }
         }
-        return isFail;
+        return isExist;
     }
+
+//    public String getStringOfElement(WebElement element){
+//        return element.getText();
+//    }
 }

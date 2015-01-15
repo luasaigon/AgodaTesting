@@ -20,7 +20,7 @@ public class SearchResultPage extends CommonAction {
     public WebElement boxSearchDetails;
 
     @FindBy(how=How.XPATH,using = "/html/body/div[1]/div[2]/article/div/div/h1")
-    private WebElement textSearchFor;
+    public  WebElement textSearchFor;
 
     public String getTextOfSearchBox(){
         return boxSearchDetails.getText();
@@ -28,10 +28,15 @@ public class SearchResultPage extends CommonAction {
 
     public String getTextSearchFor(){
         return textSearchFor.getText();
+        //return getStringOfElement(textSearchFor);
     }
 
     public boolean isSearchBoxPresent(){
         return super.existsElement("/html/body/div[1]/div[2]/article/div/div[1]/aside/div[1]/div/h3",3);
+    }
+
+    public boolean isAlternativeSearchOptionPresent(){
+        return super.existsElement("/html/body/div[1]/div[2]/article/div/div/div/div[1]",3);
     }
 
     public int countResultEntry(){

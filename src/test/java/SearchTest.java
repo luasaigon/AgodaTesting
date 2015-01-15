@@ -24,14 +24,15 @@ public class SearchTest extends CommonAction {
 
     @AfterClass
     private void exit(){
-       // driver.close();
+        //driver.close();
     }
 
     @Test
     public void search() throws InterruptedException {
-        resultPage=searchPage.inputSearchString("Hualien City")
+        resultPage=searchPage.inputSearchString("Bacolod")
                 .selectDay(5)
                 .selectMonthYear(5)
+                .selectCalendarCheckIn()
                 .clickSearch();
         sleep(5000);
         resultPage=PageFactory.initElements(driver, SearchResultPage.class);
@@ -40,11 +41,16 @@ public class SearchTest extends CommonAction {
         //Assert.assertEquals(resultPage.getTextOfSearchBox(), "Your Search Details");
         //Assert.assertTrue(resultPage.isSearchBoxPresent());
 
-        //Assert nay khi ko chon autocomplete
-        Assert.assertTrue(resultPage.getTextSearchFor().matches("Your search.*"));
 
-        System.out.println(resultPage.countResultEntry());
+        //Assert nay khi ko chon autocomplete
+        //Assert.assertTrue(resultPage.getTextSearchFor().matches("Your search.*"));
+
+        //Assert modify box is present in bottom of page search result
+        Assert.assertTrue(resultPage.isAlternativeSearchOptionPresent());
+
+        System.out.println("total has "+resultPage.countResultEntry()+" results");
     }
+
 
 
 }

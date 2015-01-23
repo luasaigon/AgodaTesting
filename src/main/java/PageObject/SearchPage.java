@@ -36,7 +36,7 @@ public class SearchPage {
     @FindBy(id = "NightCount")
     private WebElement cmbNightCount;
 
-    @FindBy(how=How.XPATH,using = "/html/body/div[1]/div[1]/div[1]/div[1]/div[2]/div/form/fieldset/dl[5]/dd/input")
+    @FindBy(how=How.CSS,using = "input[type=submit][value=Search]")
     private WebElement bntSearch;
 
     public SearchPage inputSearchString(String text){

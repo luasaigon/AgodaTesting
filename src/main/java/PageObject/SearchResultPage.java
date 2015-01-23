@@ -39,11 +39,15 @@ public class SearchResultPage extends CommonAction {
         return super.existsElement("/html/body/div[1]/div[2]/article/div/div/div/div[1]",3);
     }
 
-    public int countResultEntry(){
-        int numElement = driver.findElements(By.className("entry") ).size();
+    public int countResultEntry(String locator){
+        int numElement = driver.findElements(By.className(locator) ).size();
         return numElement;
 
     }
 
+    public String getColorOfSearchString(){
+        String colorOfString=driver.findElement(By.xpath("/html/body/div[1]/div[2]/article/div/div/h1/strong")).getAttribute("blue");
+        return colorOfString;
+    }
 
 }

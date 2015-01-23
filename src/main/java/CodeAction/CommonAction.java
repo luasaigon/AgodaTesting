@@ -86,4 +86,8 @@ public class CommonAction {
 //    public String getStringOfElement(WebElement element){
 //        return element.getText();
 //    }
+
+    public void goBackHomePage(){
+        driver.findElement(By.xpath("/html/body/div[1]/header/div/div/a/img")).click();
+    }
 }

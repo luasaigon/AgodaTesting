@@ -4,9 +4,7 @@ import PageObject.SearchResultPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 public class SearchTest extends CommonAction {
 
@@ -24,15 +22,15 @@ public class SearchTest extends CommonAction {
 
     @AfterClass
     private void exit(){
-        //driver.close();
+        super.exitAfterTest();
     }
 
-    @Test
-    public void search() throws InterruptedException {
-        resultPage=searchPage.inputSearchString("Bacolod")
+    @Test(priority = 0,enabled = false)
+    public void search_AssertReturnText() throws InterruptedException {
+        resultPage=searchPage.inputSearchString("hcm")
                 .selectDay(5)
                 .selectMonthYear(5)
-                .selectCalendarCheckIn()
+                //.selectCalendarCheckIn()
                 .clickSearch();
         sleep(5000);
         resultPage=PageFactory.initElements(driver, SearchResultPage.class);
@@ -41,16 +39,53 @@ public class SearchTest extends CommonAction {
         //Assert.assertEquals(resultPage.getTextOfSearchBox(), "Your Search Details");
         //Assert.assertTrue(resultPage.isSearchBoxPresent());
 
-
         //Assert nay khi ko chon autocomplete
-        //Assert.assertTrue(resultPage.getTextSearchFor().matches("Your search.*"));
+        Assert.assertTrue(resultPage.getTextSearchFor().matches("Your search for hcm matched the following..."));
+        super.goBackHomePage();
+
+     }
+
+    @Test(priority = 1, enabled = false)
+    public void search_AssertNumberResult() throws InterruptedException {
+        resultPage=searchPage.inputSearchString("hcm")
+                .selectDay(5)
+                .selectMonthYear(5)
+                        //.selectCalendarCheckIn()
+                .clickSearch();
+        sleep(5000);
+        resultPage=PageFactory.initElements(driver, SearchResultPage.class);
+
+        int numResult=resultPage.countResultEntry("score");
+        Assert.assertEquals(numResult,4);
+        super.goBackHomePage();
+    }
+
+    @Test(enabled = false)
+    public void search_AssertSearchOptionPresent() throws InterruptedException {
+        resultPage=searchPage.inputSearchString("hcm")
+                .selectDay(5)
+                .selectMonthYear(5)
+                        //.selectCalendarCheckIn()
+                .clickSearch();
+        sleep(5000);
+        resultPage=PageFactory.initElements(driver, SearchResultPage.class);
 
         //Assert modify box is present in bottom of page search result
         Assert.assertTrue(resultPage.isAlternativeSearchOptionPresent());
+        super.goBackHomePage();
 
-        System.out.println("total has "+resultPage.countResultEntry()+" results");
     }
 
-
+    @Test
+    public void search_AssertFontSizeAndColor() throws InterruptedException {
+        resultPage=searchPage.inputSearchString("hcm")
+                .selectDay(5)
+                .selectMonthYear(5)
+                        //.selectCalendarCheckIn()
+                .clickSearch();
+        sleep(5000);
+        resultPage=PageFactory.initElements(driver, SearchResultPage.class);
+        System.out.println("Actual color is "+resultPage.getColorOfSearchString());
+    }
 
 }

@@ -1,6 +1,7 @@
 import CodeAction.CommonAction;
 import PageObject.SearchPage;
 import PageObject.SearchResultPage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
@@ -25,7 +26,9 @@ public class SearchTest extends CommonAction {
         super.exitAfterTest();
     }
 
-    @Test(priority = 0,enabled = false)
+    //------------------------------------------------------
+
+    @Test//(priority = 0,enabled = false)
     public void search_AssertReturnText() throws InterruptedException {
         resultPage=searchPage.inputSearchString("hcm")
                 .selectDay(5)
@@ -45,7 +48,7 @@ public class SearchTest extends CommonAction {
 
      }
 
-    @Test(priority = 1, enabled = false)
+    @Test//(priority = 1, enabled = false)
     public void search_AssertNumberResult() throws InterruptedException {
         resultPage=searchPage.inputSearchString("hcm")
                 .selectDay(5)
@@ -60,7 +63,7 @@ public class SearchTest extends CommonAction {
         super.goBackHomePage();
     }
 
-    @Test(enabled = false)
+    @Test//(enabled = false)
     public void search_AssertSearchOptionPresent() throws InterruptedException {
         resultPage=searchPage.inputSearchString("hcm")
                 .selectDay(5)
@@ -76,8 +79,37 @@ public class SearchTest extends CommonAction {
 
     }
 
+    @Test//(enabled = false)
+     public void search_AssertColor() throws InterruptedException {
+        resultPage=searchPage.inputSearchString("hcm")
+                             .selectDay(5)
+                             .selectMonthYear(5)
+                                    //.selectCalendarCheckIn()
+                             .clickSearch();
+        sleep(5000);
+        resultPage=PageFactory.initElements(driver, SearchResultPage.class);
+        String colorOfSearchString=resultPage.getColorOfSearchString();
+        //Assert.assertTrue(colorOfSearchString.contains("#0283df"));
+        Assert.assertEquals(colorOfSearchString, "rgba(2, 131, 223, 1)");
+        super.goBackHomePage();
+    }
+
+    @Test//(enabled = false)
+    public void search_AssertFontSize() throws InterruptedException {
+        resultPage=searchPage.inputSearchString("hcm")
+                             .selectDay(5)
+                             .selectMonthYear(5)
+                                    //.selectCalendarCheckIn()
+                             .clickSearch();
+        sleep(5000);
+        resultPage=PageFactory.initElements(driver, SearchResultPage.class);
+        String sizeOfSearchString=resultPage.getFontSizeOfSearchString();
+        Assert.assertEquals(sizeOfSearchString,"33.8px");
+        super.goBackHomePage();
+    }
+
     @Test
-    public void search_AssertFontSizeAndColor() throws InterruptedException {
+    public void search_AssertFiveButtonPresent() throws InterruptedException{
         resultPage=searchPage.inputSearchString("hcm")
                 .selectDay(5)
                 .selectMonthYear(5)
@@ -85,7 +117,14 @@ public class SearchTest extends CommonAction {
                 .clickSearch();
         sleep(5000);
         resultPage=PageFactory.initElements(driver, SearchResultPage.class);
-        System.out.println("Actual color is "+resultPage.getColorOfSearchString());
+        Assert.assertTrue(resultPage.isButtonAllPresent());
+        Assert.assertTrue(resultPage.isButtonCitiesPresent());
+        Assert.assertTrue(resultPage.isButtonHotelsPresent());
+        Assert.assertTrue(resultPage.isButtonAirportsPresent());
+        Assert.assertTrue(resultPage.isButtonLandmarksPresent());
+        super.goBackHomePage();
     }
+
+
 
 }

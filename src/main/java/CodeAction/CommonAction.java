@@ -3,6 +3,7 @@ package CodeAction;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.PageFactory;
 
@@ -77,7 +78,6 @@ public class CommonAction {
                 }
 
                 break;
-
             }
         }
         return isExist;
@@ -86,6 +86,12 @@ public class CommonAction {
 //    public String getStringOfElement(WebElement element){
 //        return element.getText();
 //    }
+
+    public boolean isExistsWebElement(WebElement element){
+        if(element==null)
+            return false;
+        return true;
+    }
 
     public void goBackHomePage(){
         driver.findElement(By.xpath("/html/body/div[1]/header/div/div/a/img")).click();
